@@ -1,58 +1,100 @@
 import 'package:flutter/material.dart';
-import 'package:sensors_plus/sensors_plus.dart';
-import 'sensor.dart';
-import 'graph_drawing.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const AlarmApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class AlarmApp extends StatelessWidget {
+  const AlarmApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'AlarmApp',
       theme: ThemeData(
-
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const AlarmPage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
+class AlarmPage extends StatelessWidget {
+  const AlarmPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
-
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-
-        title: Text(widget.title),
-      ),
-      body: Column(
-        children: [
-          SizedBox(
-            height: 300,
-            child: FlChartLineChartSample()
-          )
+        leading: TextButton(
+          onPressed: () {
+            print('編集ボタンが押されました');
+          },
+          child: const Text(
+            '編集',
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.black,
+            ),
+          ),
+        ),
+        actions: [
+          IconButton(
+              onPressed: () {
+                print('+ボタンが押されました');
+              },
+              icon: const Icon(Icons.add, color: Colors.black),
+          ),
         ],
+        title: const Text(
+          'アラーム',
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        elevation: 0,
+      ),
+      body: const Center(
+        child: Text(
+          'アラームの一覧の表示',
+          style: TextStyle(fontSize: 18),
+        ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            IconButton(
+              onPressed: () {
+                print('アイコン1が押されました');
+              },
+              icon: const Icon(Icons.alarm, size: 30),
+            ),
+            IconButton(
+              onPressed: () {
+                print('アイコン2が押されました');
+              },
+              icon: const Icon(Icons.access_time, size: 30),
+            ),
+            IconButton(
+              onPressed: () {
+                print('アイコン3が押されました');
+              },
+              icon: const Icon(Icons.bedtime, size: 30),
+            ),
+            IconButton(
+              onPressed: () {
+                print('アイコン4が押されました');
+              },
+              icon: const Icon(Icons.settings, size: 30),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -3,8 +3,9 @@ import 'package:sensors_plus/sensors_plus.dart';
 
 class SleepSensor {
   double acceleration = 0.0;  //加速度
-  double threshold = 1.0;   //閾値設定
+  double threshold = 10.0;   //閾値設定
   bool isLightSleep = false;    //浅い眠りか
+  bool isListening = true;
 //眠りの深さの判定
   void listenToSensor(void Function(double, bool) onData) {
     accelerometerEvents.listen((AccelerometerEvent event) {
@@ -15,5 +16,8 @@ class SleepSensor {
       //コールバックでデータを返す
       onData(acceleration, isLightSleep);
     });
+  }
+  void stopListening() {
+    isListening = false;
   }
 }
