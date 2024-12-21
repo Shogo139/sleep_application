@@ -98,10 +98,10 @@ class SensorGraphScreenState extends State<SensorGraphScreen> {
             sensorHelper.isLightSleep ? 'Light Sleep Detected' : 'Deep Sleep',
             style: TextStyle(fontSize: 18, color: sensorHelper.isLightSleep ? Colors.green : Colors.red),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 35),
           ElevatedButton(
             onPressed: isListening ? stopReading : startReading,
-            child: Text(isListening ? '読み取り終了' : '読み取り開始'),
+            child: Text(isListening ? 'アラーム停止' : 'アラーム開始'),
           ),
         ],
       ),

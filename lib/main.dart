@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'pages/alarm_page.dart';
+import 'pages/graph_page.dart';
+import 'pages/list_page.dart';
+import 'pages/settings_page.dart';
 
 void main() {
   runApp(const AlarmApp());
@@ -15,86 +19,60 @@ class AlarmApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const AlarmPage(),
+      home: const MainPage(),
     );
   }
 }
 
-class AlarmPage extends StatelessWidget {
-  const AlarmPage({super.key});
+class MainPage extends StatefulWidget {
+  const MainPage({super.key});
+
+  @override
+  State<MainPage> createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
+  int _currentIndex = 0;
+
+  final List<Widget> _pages = [
+    const AlarmPage(),
+    const GraphPage(),
+    const ListPage(),
+    const SettingsPage(),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: TextButton(
-          onPressed: () {
-            print('編集ボタンが押されました');
-          },
-          child: const Text(
-            '編集',
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.black,
-            ),
+      body: _pages[_currentIndex], // 選択されたページを表示
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        selectedItemColor: Colors.orange, // 選択されたアイテムの色
+        unselectedItemColor: Colors.black, // 未選択アイテムの色
+        backgroundColor: Colors.grey[1000], // 背景色
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.alarm),
+            label: 'Alarm',
           ),
-        ),
-        actions: [
-          IconButton(
-              onPressed: () {
-                print('+ボタンが押されました');
-              },
-              icon: const Icon(Icons.add, color: Colors.black),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.access_time),
+            label: 'Graph',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.bedtime),
+            label: 'List',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Settings',
           ),
         ],
-        title: const Text(
-          'アラーム',
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
-          ),
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.white,
-        elevation: 0,
-      ),
-      body: const Center(
-        child: Text(
-          'アラームの一覧の表示',
-          style: TextStyle(fontSize: 18),
-        ),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            IconButton(
-              onPressed: () {
-                print('アイコン1が押されました');
-              },
-              icon: const Icon(Icons.alarm, size: 30),
-            ),
-            IconButton(
-              onPressed: () {
-                print('アイコン2が押されました');
-              },
-              icon: const Icon(Icons.access_time, size: 30),
-            ),
-            IconButton(
-              onPressed: () {
-                print('アイコン3が押されました');
-              },
-              icon: const Icon(Icons.bedtime, size: 30),
-            ),
-            IconButton(
-              onPressed: () {
-                print('アイコン4が押されました');
-              },
-              icon: const Icon(Icons.settings, size: 30),
-            ),
-          ],
-        ),
       ),
     );
   }
