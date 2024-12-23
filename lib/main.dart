@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'pages/alarm_page.dart';
 import 'pages/graph_page.dart';
 import 'pages/list_page.dart';
@@ -32,19 +33,28 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  final List<Map<String, dynamic>> alarms = []; // アラームリスト
+  final List<List<FlSpot>> graphHistory = []; // グラフ履歴
+
   int _currentIndex = 0;
 
-  final List<Widget> _pages = [
-    const AlarmPage(),
-    const GraphPage(),
-    const ListPage(),
-    const SettingsPage(),
-  ];
+  late final List<Widget> _pages;
+
+  @override
+  void initState() {
+    super.initState();
+    _pages = [
+      AlarmPage(alarms: alarms, graphHistory: graphHistory),
+      GraphPage(graphHistory: graphHistory),
+      const ListPage(),
+      const SettingsPage(),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _pages[_currentIndex], // 選択されたページを表示
+      body: _pages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (index) {
@@ -52,9 +62,9 @@ class _MainPageState extends State<MainPage> {
             _currentIndex = index;
           });
         },
-        selectedItemColor: Colors.orange, // 選択されたアイテムの色
-        unselectedItemColor: Colors.black, // 未選択アイテムの色
-        backgroundColor: Colors.grey[1000], // 背景色
+        selectedItemColor: Colors.orange,
+        unselectedItemColor: Colors.black,
+        backgroundColor: Colors.grey[800],
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.alarm),
